@@ -1,0 +1,35 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/focal64"
+  #config.vm.provision "shell", path: "script.sh"
+
+  ###### Maquina APP #####
+  config.vm.define "moodle-app" do |app|
+        app.vm.network "public_network"
+        app.vm.provider "virtualbox" do |v|
+          v.memory = 2048
+          v.cpus = 2
+          v.name = "moodle-app"
+        end
+  end
+ ###### Maquina Banco ######
+  config.vm.define "moodle-bd" do |bd|
+        bd.vm.network "public_network"
+        bd.vm.provider "virtualbox" do |v|
+          v.memory = 2048
+          v.cpus = 2
+          v.name = "moodle-bd"
+        end
+  end
+ ###### Maquina Banco ######
+  config.vm.define "moodle-bd02" do |bd|
+        bd.vm.network "public_network"
+        bd.vm.provider "virtualbox" do |v|
+          v.memory = 2048
+          v.cpus = 2
+          v.name = "moodle-bd02"
+        end
+  end  
+ 
+
+end

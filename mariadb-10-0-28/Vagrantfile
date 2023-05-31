@@ -1,0 +1,15 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "debian/bullseye64"
+  #config.vm.provision "shell", path: "script.sh"
+
+  ###### MariaDB 10.0.38 #####
+  config.vm.define "mariadb10038" do |app|
+        app.vm.network "public_network"
+        app.vm.provider "virtualbox" do |v|
+          v.memory = 4096
+          v.cpus = 2
+          v.name = "mariadb10038"
+        end
+  end
+end

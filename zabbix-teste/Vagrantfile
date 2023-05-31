@@ -1,0 +1,41 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/focal64"
+
+  config.vm.define "zbx-agte001" do |zbxagt|
+    zbxagt.vm.network "public_network", ip: "192.168.100.191"
+    zbxagt.vm.provider "virtualbox" do |vb|
+      vb.memory = 1024
+      vb.cpus = 1
+      vb.name = "zabbix-agent001"
+    end
+  end  
+  config.vm.define "zbx-agte002" do |zbxagt2|
+    zbxagt2.vm.network "public_network", ip: "192.168.100.192"
+    zbxagt2.vm.provider "virtualbox" do |vb|
+      vb.memory = 1024
+      vb.cpus = 1
+      vb.name = "zabbix-agent002"
+    end
+  end  
+  config.vm.define "zbx-agte003" do |zbxagt3|
+    zbxagt3.vm.network "public_network", ip: "192.168.100.193"
+    zbxagt3.vm.provider "virtualbox" do |vb|
+      vb.memory = 1024
+      vb.cpus = 1
+      vb.name = "zabbix-agent003"
+    end        
+
+  end
+  # config.vm.provision "shell",
+  #     inline: "sudo apt update &&\
+  #              sudo cd /tmp/ &&\
+	# 	   sudo wget https://repo.zabbix.com/zabbix/5.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.4-1%2Bubuntu20.04_all.deb &&\
+	# 	   sudo dpkg -i zabbix-release_5.4-1+ubuntu18.04_all.deb &&\
+	# 	   sudo apt update -y &&\
+	# 	   sudo apt install zabbix-agent2 -y &&\
+	# 	   sudo sed -i 's/^Server=127.0.0.1/Server=192.168.100.235/g' /etc/zabbix/zabbix_agent2.conf &&\
+	# 	   sudo sed -i 's/^ServerActive=127.0.0.1/ServerActive=192.168.100.235/g' /etc/zabbix/zabbix_agent2.conf &&\
+	# 	   sudo sed -i 's/^Hostname=Zabbix server/Hostname=$HOSTNAME/g' /etc/zabbix/zabbix_agent2.conf &&\
+	# 	   sudo sed -i '/# DenyKey=system.run\[\\]/a AllowKey=system.run\[\\]' /etc/zabbix/zabbix_agent2.conf"  
+end

@@ -1,0 +1,33 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "debian/bullseye64"
+  #config.vm.provision "shell", path: "script.sh"
+
+  ###### APACHE #####
+  config.vm.define "debian11-apache" do |app|
+        app.vm.network "public_network"
+        app.vm.provider "virtualbox" do |v|
+          v.memory = 2048
+          v.cpus = 2
+          v.name = "debian11-apache"
+        end
+  end
+  config.vm.define "debian11-apache02" do |app|
+        app.vm.network "public_network"
+        app.vm.provider "virtualbox" do |v|
+          v.memory = 2048
+          v.cpus = 2
+          v.name = "debian11-apache02"
+        end
+  end
+  config.vm.define "debian11-nfs" do |app|
+        app.vm.network "public_network"
+        app.vm.disk :disk, size: "10GB", name: "extra_storage1"
+        app.vm.provider "virtualbox" do |v|
+          v.memory = 2048
+          v.cpus = 2
+          #v.disk :disk, size: "10GB", name: "extra_storage1"
+          v.name = "debian11-nfs"
+        end
+  end
+end

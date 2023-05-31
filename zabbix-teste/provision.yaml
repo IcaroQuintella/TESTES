@@ -1,0 +1,40 @@
+---
+- name: Automação do Zabbix
+  hosts: zabbix
+  remote_user: root
+  become: yes
+  tasks: 
+  - name: Atualizando repositorios
+    apt:
+      update_cache: yes 
+
+  - name: Baixando biblioteca Zabbix-Agent 5.4
+    ansible.builtin.command: wget https://repo.zabbix.com/zabbix/5.4/ubuntu/pool/main/z/zabbix-release/zabbix-release_5.4-1%2Bubuntu20.04_all.deb 
+
+  - name: install zabbix-release
+    apt:
+      deb: /home/vagrant/zabbix-release_5.4-1+ubuntu20.04_all.deb
+
+  - name: Atualizando repositorios
+    apt:
+      update_cache: yes  
+
+  - name: Install agent-zabbix=5.4
+    apt:
+      name: zabbix-agent2
+      state: present
+
+  - name: adicionado nome do host
+    ansible.builtin.shell: |
+            echo "alterando o arquivo do zabbix_agent2.conf" 
+            sed -i 's/^Server=127.0.0.1/Server=192.168.100.235/g' /etc/zabbix/zabbix_agent2.conf 
+            sed -i 's/^ServerActive=127.0.0.1/ServerActive=192.168.100.235/g' /etc/zabbix/zabbix_agent2.conf 
+            sed -i 's/^Hostname=Zabbix server/# Hostname=Zabbix server/g' /etc/zabbix/zabbix_agent2.conf 
+            sed -i '/# HostnameItem=system.hostname/a HostnameItem=system.hostname' /etc/zabbix/zabbix_agent2.conf 
+            sed -i '/# DenyKey=system.run\[\*\]/a AllowKey=system.run\[\*\]' /etc/zabbix/zabbix_agent2.conf 
+            sed -i '/# HostMetadata=/a HostMetadata=newagent' /etc/zabbix/zabbix_agent2.conf
+  - name: Iniciar agente zabbix
+    service:
+      name: zabbix-agent2
+      state: started
+      enabled: yes 

@@ -1,0 +1,10 @@
+---
+- name: Automação do Zabbix
+  hosts: zabbix
+  remote_user: root
+  become: yes
+  tasks:
+  - name: Iniciar agente zabbix
+    service:
+      name: zabbix-agent2
+      state: restarted

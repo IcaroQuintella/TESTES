@@ -1,0 +1,15 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/focal64"
+  #config.vm.provision "shell", path: "script.sh"
+
+  ###### Tomcat #####
+  config.vm.define "tomcat10" do |app|
+        app.vm.network "public_network"
+        app.vm.provider "virtualbox" do |v|
+          v.memory = 4096
+          v.cpus = 2
+          v.name = "tomcat10"
+        end
+  end
+end

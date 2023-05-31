@@ -1,0 +1,26 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "ubuntu/focal64"
+  #config.vm.provision "shell", path: "script.sh"
+
+  ###### Maquina NFS Client #####
+  config.vm.define "nfs-client" do |app|
+        app.vm.network "public_network"
+        app.vm.provider "virtualbox" do |v|
+          v.memory = 2048
+          v.cpus = 2
+          v.name = "nfs-client"
+        end
+  end
+ ###### Maquina NFS Server ######
+  config.vm.define "nfs-server" do |bd|
+        bd.vm.network "public_network"
+        bd.vm.provider "virtualbox" do |v|
+          v.memory = 2048
+          v.cpus = 2
+          v.name = "nfs-server"
+        end
+  end
+ 
+
+end
